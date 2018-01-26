@@ -1,0 +1,6 @@
+{
+  "gimi-project": {
+    "cluster": "gimi-web",
+    "taskDefinition": "gimi-project"
+  }
+}

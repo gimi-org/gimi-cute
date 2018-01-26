@@ -1,0 +1,40 @@
+{
+  "name": "gimi-project",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-http-proxy": "^1.1.0",
+    "httpp-proxy": "^0.10.3",
+    "moment": "^2.20.1",
+    "node-fetch": "^1.7.3",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-scripts": "1.0.14",
+    "recharts": "^1.0.0-beta.1",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "create-keys": "node createKeys.js",
+    "build": "CI=false react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "babel": "./node_modules/.bin/babel ./src -d ./dest --copy-files",
+    "build:server": "npm run babel",
+    "build:client": "npm run build",
+    "start:server": "node dest/server/index.js",
+    "server": "npm run build:server && npm run start:server",
+    "docker:build": "docker build -f ./deploy/Dockerfile -t gimi-project .",
+    "docker:run": "docker run -p 9000:9000 --name gimi-project gimi-project",
+    "docker:rm-all": "docker rm $(docker ps -a -q)",
+    "docker:rmi-all": "docker rmi $(docker images -q)"
+  }
+}
