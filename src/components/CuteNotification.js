@@ -15,7 +15,7 @@ export default class CuteNotification extends Component<Props> {
     return (
       <div style={styles.container}>
         <div style={styles.infoContent}>
-          <img src={logo} width='50' style={styles.logo} />
+          <img src={logo} width='50' style={styles.logo} alt='pig snout' />
           <h3>{text}</h3>
         </div>
         <p style={styles.date}>{moment(date).format('llll')}</p>

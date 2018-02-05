@@ -1,18 +1,26 @@
 import React, {Component} from 'react'
 import CuteNotification from './components/CuteNotification'
 import moment from 'moment'
+var Stomp = require('@stomp/stompjs')
 
 type Props = {}
 type State = {
+  client: *,
   notifications: Object[]
 }
 
 export default class App extends Component<Props, State> {
-  state = {notifications: []}
 
-  componentWillMount () {
-    // setInterval(this.getNotifications, 1000)
-    this.getNotifications()
+  constructor (props: Props) {
+    super(props)
+    this.state = {
+      client: Stomp.client('wss://spirited-lizard.rmq.cloudamqp.com'),
+      notifications: []
+    }
+  }
+
+  componentDidMount () {
+    this.connectStomp()
   }
 
   render() {
@@ -29,11 +37,24 @@ export default class App extends Component<Props, State> {
     return <CuteNotification text={notif.text} date={notif.date} key={index} />
   }
 
-  getNotifications = () => {
-    var {notifications} = this.state
-    var notification = {text: 'Hello im testin', date: moment()}
-    notifications.unshift(notification)
-    this.setState({notifications})
+  connectStomp = () => {
+    var {client} = this.state
+    var headers = {
+      login: 'stomp',
+      passcode: 'd5wjJX2TBJ1nC0nFyyKj'
+    }
+    client.connect(headers, this.onConnect)
+  }
+
+  onConnect = () => {
+    alert('connected')
+    var {client} = this.state
+    client.subscribe("/topic/cute-feed", this.onMessage);
+  }
+
+  onMessage = (message: *) => {
+    alert('message')
+    console.log(message)
   }
 }
 
